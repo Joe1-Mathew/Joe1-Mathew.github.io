@@ -36,6 +36,191 @@
     .foot-log-actions button{border:0;background:none;color:var(--accent2);padding:0;font-size:12px}
     .foot-log-actions button.danger{color:var(--danger)}
     @media(max-width:850px){.development-layout{grid-template-columns:1fr}}
+  /* =========================================
+   ANKLE MECHANISM / PROTOTYPE DOCUMENTATION
+   ========================================= */
+
+.prototype-intro {
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap: 18px;
+  margin-bottom: 24px;
+}
+
+.prototype-summary {
+  padding: 28px;
+}
+
+.prototype-summary h2 {
+  font-size: 25px;
+  letter-spacing: -.7px;
+  margin: 14px 0;
+}
+
+.prototype-summary p {
+  color: #a8b7c3;
+  font-size: 13px;
+  line-height: 1.85;
+}
+
+.prototype-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 22px;
+  border-top: 1px solid var(--border);
+  padding-top: 18px;
+}
+
+.prototype-meta-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  font-size: 12px;
+}
+
+.prototype-meta-row span {
+  color: var(--muted);
+}
+
+.prototype-meta-row strong {
+  color: #e3e1ff;
+  font-family: var(--mono);
+  font-weight: 600;
+  text-align: right;
+}
+
+.prototype-photo {
+  position: relative;
+  background: #171e2a;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  min-height: 350px;
+}
+
+.prototype-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.prototype-photo-label {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background: #101722e8;
+  color: #dcd8ff;
+  padding: 7px 10px;
+  border-radius: 6px;
+  font: 700 10px var(--mono);
+  letter-spacing: 1px;
+}
+
+.prototype-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.prototype-gallery .gallery-img {
+  height: 260px;
+  background: #141c27;
+}
+
+.prototype-gallery img {
+  object-fit: contain;
+  object-position: center;
+}
+
+.engineering-decision {
+  padding: 26px;
+  margin-top: 16px;
+}
+
+.engineering-decision h3 {
+  font-size: 18px;
+  margin: 0 0 12px;
+}
+
+.engineering-decision p {
+  color: #a8b7c3;
+  font-size: 13px;
+  line-height: 1.85;
+}
+
+.engineering-decision strong {
+  color: #e5e2ff;
+}
+
+.design-comparison {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.design-option {
+  padding: 23px;
+}
+
+.design-option h3 {
+  margin: 10px 0;
+  font-size: 17px;
+}
+
+.design-option p {
+  font-size: 12px;
+  color: #a4b3c2;
+  line-height: 1.8;
+}
+
+.design-option.selected {
+  border-color: #6762a3;
+  background: #1a1b30;
+}
+
+.prototype-checks {
+  padding: 25px;
+}
+
+.prototype-checks h3 {
+  margin: 0 0 15px;
+}
+
+.prototype-checks ul {
+  margin: 0;
+  padding-left: 19px;
+  color: #a8b7c3;
+  font-size: 12px;
+  line-height: 2.1;
+}
+
+.prototype-checks li::marker {
+  color: #aeabff;
+}
+
+@media (max-width: 900px) {
+  .prototype-intro {
+    grid-template-columns: 1fr;
+  }
+
+  .prototype-gallery {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 650px) {
+  .prototype-gallery,
+  .design-comparison {
+    grid-template-columns: 1fr;
+  }
+
+  .prototype-photo {
+    min-height: 270px;
+  }
+}
   </style>
 <style>
 /* Rev 02 public project updates */
@@ -77,7 +262,11 @@
 <button class="nav-item" data-page="journal" type="button"><span class="ico" data-icon="notebook"></span> Engineering log</button>
 <p class="side-label">Subsystems</p>
 <button class="nav-item" data-page="foot" type="button"><span class="ico" data-icon="layers"></span> Foot assembly <small>01</small></button>
-<button class="nav-item" data-page="ankle" type="button"><span class="ico" data-icon="move"></span> Ankle mechanism <span class="soon">NEXT</span></button>
+<button class="nav-item" data-page="ankle" type="button">
+  <span class="ico" data-icon="move"></span>
+  Ankle mechanism
+  <span class="soon">PROTOTYPE</span>
+</button>
 <button class="nav-item" data-page="leg" type="button"><span class="ico" data-icon="settings"></span> Leg structure <span class="soon">LATER</span></button>
 <button class="nav-item" data-page="torso" type="button"><span class="ico" data-icon="box"></span> Torso &amp; structure <span class="soon">LATER</span></button>
 <button class="nav-item" data-page="controls" type="button"><span class="ico" data-icon="cpu"></span> Control systems <span class="soon">LATER</span></button>
@@ -90,7 +279,7 @@
 <header class="topbar"><div style="display:flex;align-items:center;gap:13px"><button aria-label="Open menu" class="mobile-nav" id="menuButton" type="button"><span class="ico" data-icon="menu"></span></button><div class="crumb">LAB <span>/</span> HUMANOID <span>/</span> <b id="breadcrumb">OVERVIEW</b></div></div><div class="top-actions"><span class="local-pill"><span class="dot"></span> PUBLIC PORTFOLIO</span><button class="btn secondary" id="importBackup" style="padding:8px 10px" title="Import saved JSON backup" type="button">Import JSON</button><input accept=".json,application/json" hidden="" id="backupFile" type="file"/><button aria-label="Export your local project notes" class="icon-button" id="quickExport" title="Export your local project notes" type="button"><span class="ico" data-icon="download"></span></button></div></header>
 <div class="content">
 <section aria-label="Project overview" class="page active" id="page-overview">
-<div class="hero"><div class="hero-copy"><div class="eyebrow">OPEN ENGINEERING PORTFOLIO / HUMANOID ROBOTICS</div><h1>Building a humanoid,<br/><span>one system at a time.</span></h1><p class="lede">An evolving, public record of a humanoid robot designed system by system: real SOLIDWORKS geometry, practical manufacturing choices, trade-offs, and validation plans. Current focus: the three-part right foot.</p><div class="hero-buttons"><button class="btn" data-go="foot" type="button">Explore foot assembly <span class="ico" data-icon="arrow"></span></button><button class="btn secondary" data-go="journal" type="button"><span class="ico" data-icon="plus"></span> Add progress entry</button></div></div><div class="hero-visual"><span class="hero-tag">CURRENT THREE-PART FOOT · RIGHT SIDE</span><img alt="Isolated CAD view of the current humanoid right foot: indigo PLA exterior, aluminum structure and black rubber outsole." src="assets/foot-only.webp"/><span class="axis">REV 02 · OCT 2026</span></div></div>
+<div class="hero"><div class="hero-copy"><div class="eyebrow">Independent Engineering Project</div><h1>Humanoid Robotics<br/><span>Prototype B1</span></h1><p class="lede">Independent Humanoid Robot Development. Mechanical Design, CAD, material selection, manufacturing,structural analysis, and simulation.<br><br>Current work: foot assembly, ankle mechanism,and actuator-driven linkages.</p><div class="hero-buttons"><button class="btn" data-go="foot" type="button">Explore foot assembly <span class="ico" data-icon="arrow"></span></button><button class="btn secondary" data-go="journal" type="button"><span class="ico" data-icon="plus"></span> Add progress entry</button></div></div><div class="hero-visual"><span class="hero-tag">CURRENT THREE-PART FOOT · RIGHT SIDE</span><img alt="Isolated CAD view of the current humanoid right foot: indigo PLA exterior, aluminum structure and black rubber outsole." src="assets/foot-only.webp"/><span class="axis">REV 02 · OCT 2026</span></div></div>
 <div class="metrics">
 <div class="metric"><div class="m-label">Documented subsystem</div><div class="m-number">01 <span style="color:#637982;font-size:17px">/ evolving</span></div><div class="m-hint">RIGHT FOOT ASSEMBLY</div></div>
 <div class="metric"><div class="m-label">Current foot components</div><div class="m-number">03</div><div class="m-hint">RUBBER · 6061-T6 · PLA</div></div>
@@ -244,7 +433,606 @@
 </div>
 </section>
 </section>
-<section aria-label="Robot subsystem roadmap" class="page" id="page-roadmap"><div class="page-title"><div><div class="eyebrow">PROJECT STRUCTURE</div><h1>System roadmap</h1><p>A public overview of planned humanoid subsystems. Only the right foot has a current design record.</p></div></div><div class="roadmap-grid"><article class="section-card roadmap-card live" data-go="foot" role="button" tabindex="0"><div><div class="no">01 / LOWER LIMB</div><h3>Foot assembly</h3><p>Current three-part foot: rubber, 6061-T6 aluminum and deep-indigo PLA, with reliability-focused attachment.</p></div><span class="state">DOCUMENTED</span></article><article class="section-card roadmap-card"><div><div class="no">02 / LOWER LIMB</div><h3>Ankle mechanism</h3><p>Yoke, pitch/roll axes, ball-bearing joints, and actuator pushrods.</p></div><span class="state">PLANNED</span></article><article class="section-card roadmap-card"><div><div class="no">03 / STRUCTURE</div><h3>Leg structure</h3><p>Linkages, motor mounts, knee/hip interfaces, mass budget.</p></div><span class="state">FUTURE</span></article><article class="section-card roadmap-card"><div><div class="no">04 / STRUCTURE</div><h3>Torso and frame</h3><p>Load paths, packaging, connection patterns, and electronics mounts.</p></div><span class="state">FUTURE</span></article><article class="section-card roadmap-card"><div><div class="no">05 / SYSTEMS</div><h3>Actuation &amp; sensing</h3><p>Motor sizing, encoders, sensors, power, and wiring.</p></div><span class="state">FUTURE</span></article><article class="section-card roadmap-card"><div><div class="no">06 / SYSTEMS</div><h3>Controls &amp; simulation</h3><p>Dynamics, gait control, system identification, and validation.</p></div><span class="state">FUTURE</span></article></div></section>
+<!-- =========================================
+     SUBSYSTEM 02 / ANKLE MECHANISM
+     ========================================= -->
+
+<section
+  aria-label="Ankle mechanism documentation"
+  class="page"
+  id="page-ankle"
+>
+
+  <!-- PAGE HEADER -->
+
+  <div class="page-title">
+
+    <div>
+
+      <div class="eyebrow">
+        SUBSYSTEM 02 / LOWER LIMB
+      </div>
+
+      <h1>Ankle Mechanism</h1>
+
+      <p>
+        Universal joint, pushrod linkages, bearing interfaces,
+        and fastening development.
+      </p>
+
+    </div>
+
+    <div class="rightmeta">
+
+      <span class="tag blue">
+        PROTOTYPE DEVELOPMENT
+      </span>
+
+      <div class="smallmono" style="margin-top:12px">
+        OCTOBER 2026
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- PROTOTYPE OVERVIEW -->
+
+  <div class="prototype-intro">
+
+    <div class="section-card prototype-summary">
+
+      <div class="eyebrow">
+        PUSHROD LINKAGE / FASTENING STUDY
+      </div>
+
+      <h2>
+        Bearing Retention &amp; Mechanical Fastening
+      </h2>
+
+      <p>
+        Initial physical prototype of the pushrod linkage
+        mounting arrangement.
+
+        The design uses circular bearing interfaces and
+        mechanically retained fasteners rather than
+        elongated adjustment slots.
+      </p>
+
+      <p>
+        The prototype is being used to evaluate the
+        fastening arrangement, component alignment,
+        and suitability of the geometry for
+        laser-cut manufacturing.
+      </p>
+
+      <p>
+        The intended final configuration uses
+        appropriately sized through-bolts and
+        locknuts, eliminating the need for tapped
+        holes in the linkage plates.
+      </p>
+
+      <div class="prototype-meta">
+
+        <div class="prototype-meta-row">
+          <span>Component</span>
+          <strong>Pushrod linkage</strong>
+        </div>
+
+        <div class="prototype-meta-row">
+          <span>Joint interface</span>
+          <strong>Rolling-element bearing</strong>
+        </div>
+
+        <div class="prototype-meta-row">
+          <span>Fastening concept</span>
+          <strong>Through-bolt + locknut</strong>
+        </div>
+
+        <div class="prototype-meta-row">
+          <span>Hole geometry</span>
+          <strong>Round / close clearance</strong>
+        </div>
+
+        <div class="prototype-meta-row">
+          <span>Target manufacturing</span>
+          <strong>Laser cutting</strong>
+        </div>
+
+        <div class="prototype-meta-row">
+          <span>Current stage</span>
+          <strong>Physical prototype</strong>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- PRIMARY PROTOTYPE PHOTO -->
+
+    <div class="prototype-photo">
+
+      <span class="prototype-photo-label">
+        FIG 05 / PHYSICAL PROTOTYPE
+      </span>
+
+      <img
+        src="assets/pushrod-prototype-front.jpg"
+        alt="Physical pushrod linkage prototype showing circular bearing interfaces and fastener locations"
+      />
+
+    </div>
+
+  </div>
+
+
+  <!-- DESIGN DECISION -->
+
+  <div class="section-head">
+
+    <div>
+
+      <h2>Fastening Design</h2>
+
+      <p>
+        Manufacturing-driven selection of the linkage
+        fastening arrangement.
+      </p>
+
+    </div>
+
+    <span class="tag">
+      DFM / DFA
+    </span>
+
+  </div>
+
+
+  <div class="design-comparison">
+
+    <!-- REFERENCE APPROACH -->
+
+    <article class="section-card design-option">
+
+      <div class="eyebrow">
+        REFERENCE DESIGN
+      </div>
+
+      <h3>
+        CNC-Machined Linkage
+      </h3>
+
+      <p>
+        The ROBOTTO Party Origin linkage serves as
+        a mechanical design reference.
+
+        Its CNC-machined components incorporate
+        bearing mounting features into the linkage
+        geometry.
+      </p>
+
+      <p>
+        This provides a useful reference for joint
+        packaging and linkage architecture, but the
+        manufacturing approach is not being directly
+        replicated.
+      </p>
+
+    </article>
+
+
+    <!-- SELECTED APPROACH -->
+
+    <article class="section-card design-option selected">
+
+      <div class="eyebrow">
+        PROPOSED DESIGN
+      </div>
+
+      <h3>
+        Laser-Cut Linkage
+      </h3>
+
+      <p>
+        The proposed design uses flat linkage
+        geometry, circular bearing interfaces,
+        and through-bolts secured with locknuts.
+      </p>
+
+      <p>
+        This removes the need for tapped linkage
+        holes and reduces dependence on secondary
+        machining operations.
+      </p>
+
+      <p>
+        The objective is to preserve the required
+        joint functionality while simplifying
+        manufacturing and assembly.
+      </p>
+
+    </article>
+
+  </div>
+
+
+  <!-- ENGINEERING RATIONALE -->
+
+  <article class="section-card engineering-decision">
+
+    <div class="eyebrow">
+      DESIGN DECISION / 001
+    </div>
+
+    <h3>
+      Through-Bolts and Locknuts
+    </h3>
+
+    <p>
+      <strong>Selected concept:</strong>
+      Use standard through-bolts with locknuts
+      instead of threaded holes in the
+      laser-cut linkage components.
+    </p>
+
+    <p>
+      The fasteners provide axial clamping and
+      mechanical retention.
+
+      Close-clearance holes are intended to
+      reduce positional play and improve
+      alignment between the assembled components.
+    </p>
+
+    <p>
+      The bearing interface must independently
+      maintain the required rotational freedom.
+
+      Where a fastener passes through a bearing,
+      suitable spacers or shoulders will be used
+      to prevent unwanted bearing compression.
+    </p>
+
+    <p>
+      <strong>Manufacturing rationale:</strong>
+      Eliminating tapped holes allows the linkage
+      plates to be manufactured primarily from
+      two-dimensional cut profiles.
+    </p>
+
+    <p>
+      <strong>Assembly rationale:</strong>
+      Standardized fasteners simplify installation,
+      disassembly, replacement, and future
+      maintenance.
+    </p>
+
+    <div class="decision-result">
+
+      DESIGN DIRECTION:
+      LASER-CUT PROFILES + MECHANICAL RETENTION
+
+    </div>
+
+  </article>
+
+
+  <!-- PHYSICAL PROTOTYPE EVIDENCE -->
+
+  <div class="section-head">
+
+    <div>
+
+      <h2>Prototype Evidence</h2>
+
+      <p>
+        Physical assembly photographs.
+        Select an image to inspect it at full resolution.
+      </p>
+
+    </div>
+
+    <span class="tag blue">
+      PHYSICAL PROTOTYPE
+    </span>
+
+  </div>
+
+
+  <div class="prototype-gallery">
+
+    <!-- PHOTO 1 -->
+
+    <button
+      class="gallery-card"
+      type="button"
+      data-image="assets/pushrod-prototype-front.jpg"
+      data-caption="Figure 05 — Physical linkage prototype showing the bearing region and fastener arrangement"
+    >
+
+      <div class="gallery-img">
+
+        <img
+          src="assets/pushrod-prototype-front.jpg"
+          alt="Front view of the physical pushrod linkage prototype"
+        />
+
+      </div>
+
+      <div class="gallery-caption">
+
+        <strong>
+          FIG 05 — Linkage Prototype
+        </strong>
+
+        <span>
+          Bearing interface / fastener arrangement
+        </span>
+
+      </div>
+
+    </button>
+
+
+    <!-- PHOTO 2 -->
+
+    <button
+      class="gallery-card"
+      type="button"
+      data-image="assets/pushrod-prototype-reverse.jpg"
+      data-caption="Figure 06 — Reverse view of the pushrod linkage prototype"
+    >
+
+      <div class="gallery-img">
+
+        <img
+          src="assets/pushrod-prototype-reverse.jpg"
+          alt="Reverse view of the pushrod linkage and fastener arrangement"
+        />
+
+      </div>
+
+      <div class="gallery-caption">
+
+        <strong>
+          FIG 06 — Reverse View
+        </strong>
+
+        <span>
+          Fastener positioning / assembly
+        </span>
+
+      </div>
+
+    </button>
+
+
+    <!-- PHOTO 3 -->
+
+    <button
+      class="gallery-card"
+      type="button"
+      data-image="assets/pushrod-prototype-overview.jpg"
+      data-caption="Figure 07 — Full linkage prototype showing the circular bearing openings and smaller fastener holes"
+    >
+
+      <div class="gallery-img">
+
+        <img
+          src="assets/pushrod-prototype-overview.jpg"
+          alt="Full linkage prototype showing the bearing openings and mounting holes"
+        />
+
+      </div>
+
+      <div class="gallery-caption">
+
+        <strong>
+          FIG 07 — Full Geometry
+        </strong>
+
+        <span>
+          Circular openings / linkage profile
+        </span>
+
+      </div>
+
+    </button>
+
+  </div>
+
+
+  <!-- PROTOTYPE OBSERVATIONS -->
+
+  <article class="section-card engineering-decision">
+
+    <div class="eyebrow">
+      PROTOTYPE / OBSERVATIONS
+    </div>
+
+    <h3>
+      Initial Assembly Evaluation
+    </h3>
+
+    <p>
+      The physical prototype demonstrates the
+      proposed linkage geometry and the arrangement
+      of the bearing and fastening interfaces.
+    </p>
+
+    <p>
+      The current photographs show temporary
+      fasteners extending beyond the linkage.
+
+      These are not representative of the
+      intended final bolt lengths.
+    </p>
+
+    <p>
+      Final hardware will be selected according
+      to the assembled grip length, required
+      thread engagement, and available clearance.
+    </p>
+
+    <p>
+      The prototype provides a basis for
+      evaluating the mechanical assembly concept.
+
+      Structural capacity, fatigue performance,
+      bearing retention, and dynamic reliability
+      have not yet been verified.
+    </p>
+
+  </article>
+
+
+  <!-- VALIDATION -->
+
+  <div class="section-head">
+
+    <div>
+
+      <h2>Engineering Validation</h2>
+
+      <p>
+        Remaining checks before finalizing
+        the linkage design.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <div class="section-card prototype-checks">
+
+    <h3>
+      Open Design Checks
+    </h3>
+
+    <ul>
+
+      <li>
+        Confirm final fastener diameter,
+        grip length, and thread engagement.
+      </li>
+
+      <li>
+        Establish appropriate bolt-to-hole
+        clearance tolerances.
+      </li>
+
+      <li>
+        Verify bearing retention and
+        rotational freedom.
+      </li>
+
+      <li>
+        Evaluate plate bearing stress,
+        bolt shear, and local stress
+        concentrations.
+      </li>
+
+      <li>
+        Verify material remaining between
+        the bearing opening and adjacent
+        fastener holes.
+      </li>
+
+      <li>
+        Confirm laser-cut dimensional accuracy
+        and required post-processing.
+      </li>
+
+      <li>
+        Evaluate linkage stiffness and
+        fatigue under cyclic loading.
+      </li>
+
+      <li>
+        Validate the final assembly using
+        FEA and physical testing.
+      </li>
+
+    </ul>
+
+  </div>
+
+
+  <!-- NEXT DESIGN STAGE -->
+
+  <div class="section-head">
+
+    <div>
+
+      <h2>Next Development</h2>
+
+      <p>
+        Planned mechanical design work.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <div class="next-grid">
+
+    <div class="section-card next">
+
+      <h3>
+        Finalize Linkage Geometry
+      </h3>
+
+      <p>
+        Determine pivot center distances,
+        bearing dimensions, and final
+        fastener specifications.
+      </p>
+
+    </div>
+
+    <div class="section-card next">
+
+      <h3>
+        Generative Design
+      </h3>
+
+      <p>
+        Optimize both pushrods for mass,
+        stiffness, buckling resistance,
+        and manufacturing constraints.
+      </p>
+
+    </div>
+
+    <div class="section-card next">
+
+      <h3>
+        Lower-Leg Integration
+      </h3>
+
+      <p>
+        Integrate the RS04 and two RS10P
+        actuators with the knee-to-ankle
+        structure and linkage system.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+<section
+  aria-label="System roadmap"
+  class="page"
+  id="page-roadmap"
+>
+  <div class="page-title">
+  <div><div class="eyebrow">PROJECT STRUCTURE</div><h1>System roadmap</h1><p>A public overview of planned humanoid subsystems. Only the right foot has a current design record.</p></div></div><div class="roadmap-grid"><article class="section-card roadmap-card live" data-go="foot" role="button" tabindex="0"><div><div class="no">01 / LOWER LIMB</div><h3>Foot assembly</h3><p>Current three-part foot: rubber, 6061-T6 aluminum and deep-indigo PLA, with reliability-focused attachment.</p></div><span class="state">DOCUMENTED</span></article><article class="section-card roadmap-card"><div><div class="no">02 / LOWER LIMB</div><h3>Ankle mechanism</h3><p>Yoke, pitch/roll axes, ball-bearing joints, and actuator pushrods.</p></div><span class="state">PLANNED</span></article><article class="section-card roadmap-card"><div><div class="no">03 / STRUCTURE</div><h3>Leg structure</h3><p>Linkages, motor mounts, knee/hip interfaces, mass budget.</p></div><span class="state">FUTURE</span></article><article class="section-card roadmap-card"><div><div class="no">04 / STRUCTURE</div><h3>Torso and frame</h3><p>Load paths, packaging, connection patterns, and electronics mounts.</p></div><span class="state">FUTURE</span></article><article class="section-card roadmap-card"><div><div class="no">05 / SYSTEMS</div><h3>Actuation &amp; sensing</h3><p>Motor sizing, encoders, sensors, power, and wiring.</p></div><span class="state">FUTURE</span></article><article class="section-card roadmap-card"><div><div class="no">06 / SYSTEMS</div><h3>Controls &amp; simulation</h3><p>Dynamics, gait control, system identification, and validation.</p></div><span class="state">FUTURE</span></article></div></section>
 <section aria-label="Engineering log" class="page" id="page-journal"><div class="page-title"><div><div class="eyebrow">OPTIONAL / BROWSER-LOCAL NOTEBOOK</div><h1>Personal engineering log</h1><p>Record new observations privately in your browser. Published design decisions live in the Foot Assembly documentation; this journal is not synchronized between visitors.</p></div></div><div class="caution" style="margin:0 0 16px"><strong>Public site, local journal:</strong> This page is published as a static portfolio, but your edits in the fields below are saved only to your browser. They are not uploaded, shared or added to the public documentation. Do not treat this as an online account or cloud backup.</div><div class="journal-wrap"><div class="section-card journal-form"><h3>New entry</h3><form id="journalForm"><div class="form-row"><div class="field"><label for="entryDate">Date</label><input id="entryDate" required="" type="date"/></div><div class="field"><label for="entryType">Category</label><select id="entryType"><option>CAD</option><option>DFM</option><option>Decision</option><option>Test</option><option>Research</option></select></div></div><div class="field"><label for="entryTitle">Entry title</label><input id="entryTitle" maxlength="100" placeholder="e.g. Revised M4 bracket holes" required="" type="text"/></div><div class="field"><label for="entryBody">What changed / why?</label><textarea id="entryBody" maxlength="4000" placeholder="Describe the change, key dimensions, reasoning, observations, and next validation step..." required=""></textarea></div><button class="btn" type="submit"><span class="ico" data-icon="plus"></span> Add to log</button></form><p class="smallmono" style="line-height:1.7;margin-top:19px">Browser-local storage may be cleared. Use the export control to back up your engineering notes as JSON.</p></div><div class="section-card journal-list"><div style="display:flex;justify-content:space-between;align-items:center;gap:12px"><h3>Project timeline</h3><button class="link-btn" id="exportJournal" type="button">Export JSON ↗</button></div><div id="entries"></div></div></div></section>
 <section aria-label="Undocumented subsystem" class="page" id="page-empty"><div class="eyebrow" id="emptyEyebrow">PLANNED SUBSYSTEM</div><div class="empty-shell"><span class="ico" data-icon="construction"></span><h1 class="empty-h" id="emptyTitle">Coming later</h1><p id="emptyText">This subsystem isn't documented yet. The workspace is ready to grow as new CAD assemblies and test results are added.</p><button class="btn" data-go="roadmap" type="button">Return to roadmap <span class="ico" data-icon="arrow"></span></button></div></section>
 <footer class="muted-foot"><span>HUMANOID LAB / PUBLIC ENGINEERING DESIGN RECORD</span><span>STATIC PROJECT PAGES · PERSONAL NOTES REMAIN BROWSER-LOCAL</span></footer>
