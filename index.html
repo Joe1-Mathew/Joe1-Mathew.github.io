@@ -5,7 +5,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <meta content="dark" name="color-scheme"/>
-<meta content="Public humanoid robotics engineering portfolio: three-part robotic foot, SolidWorks CAD, design for reliability, FDM printing, and validation roadmap." name="description"/>
+<meta content="Public humanoid robotics research portfolio: 1.2 m compact robot concept, 35-45 kg mass target, MuJoCo leg-geometry comparison, human-inspired joint limits, SolidWorks mechanical design, and validation roadmap." name="description"/>
 <title>Humanoid Lab | Open Humanoid Robotics Design Portfolio</title>
 <style>
     :root { --bg:#090e15; --sidebar:#0d151e; --panel:#101b26; --panel-hi:#15222d; --border:#273440; --muted:#8c9aab; --fg:#eaf1f1; --accent:#a7e48c; --accent2:#78cbe5; --amber:#eac78c; --danger:#e2a09c; --mono:ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace; --sans:Inter,"Segoe UI",system-ui,-apple-system,sans-serif; }
@@ -252,7 +252,44 @@
 #page-foot section{scroll-margin-top:108px}
 @media(max-width:1100px){.decision-grid{grid-template-columns:1fr}.print-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:750px){.print-grid{grid-template-columns:1fr}.hero-visual img{width:112%;left:-6%}}
-</style></head>
+</style>
+<style>
+/* Rev 03 | system sizing, ROM research and simulation documentation */
+#page-leg,#page-rom,#page-torso,#page-controls {scroll-margin-top:100px}
+.research-lede {font-size:14px;color:#abbacc;line-height:1.9;max-width:950px}
+.doc-block {padding:24px;margin:0 0 15px}
+.doc-block h2 {font-size:20px;letter-spacing:-.4px;margin:2px 0 12px}
+.doc-block h3 {font-size:15px;margin:19px 0 8px}
+.doc-block p,.doc-block li {font-size:13px;color:#a6b7c6;line-height:1.85}
+.doc-block ul,.doc-block ol {padding-left:21px}
+.doc-block a {color:#b5caff;overflow-wrap:anywhere;text-decoration:underline;text-underline-offset:3px}
+.doc-block strong {color:#e5eff2}
+.doc-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
+.doc-grid.three {grid-template-columns:repeat(3,minmax(0,1fr))}
+.doc-table-wrap {overflow-x:auto;margin:14px 0}
+.doc-table {border-collapse:collapse;width:100%;min-width:560px;font-size:12px}
+.doc-table th {font-size:10px;text-transform:uppercase;letter-spacing:.7px;color:#c5d2df;background:#1b2936;text-align:left}
+.doc-table th,.doc-table td {border:1px solid #2c3a49;padding:10px 12px;vertical-align:top}
+.doc-table td {color:#a9b9c7}
+.doc-table tr:nth-child(even) td {background:#14212d}
+.doc-table tr strong {color:#e7eef6}
+.doc-stat {padding:19px;border:1px solid #343e61;border-radius:11px;background:#1a2034}
+.doc-stat .value {font:700 clamp(20px,2.6vw,31px) var(--mono);color:#d2cfff;letter-spacing:-1px}
+.doc-stat .key {font:10px var(--mono);text-transform:uppercase;color:#99a9c0;letter-spacing:.7px;margin-top:5px}
+.formula {margin:15px 0;padding:16px;border-radius:10px;background:#0b1622;border:1px solid #38485b;color:#d7e6f5;font:14px/1.8 var(--mono);overflow-wrap:anywhere}
+.formula small {display:block;color:#8ea5b7;font-size:11px;margin-top:4px}
+.status-note {border-left:3px solid #adabff;background:#1d2336;padding:13px 16px;color:#b9c5d6;font-size:12px;line-height:1.8;margin:16px 0}
+.status-note.warn {border-color:#eac78c;background:#27271f}
+.numbered {font:700 11px var(--mono);color:#c5bcff}
+.source-list li {margin:12px 0}
+.progress-entry {border-left:2px solid #aeabff;margin:0 0 18px 7px;padding:0 0 10px 20px;position:relative}
+.progress-entry:before {content:'';height:8px;width:8px;border-radius:50%;background:#aeabff;position:absolute;left:-5px;top:4px}
+.progress-entry time {font:11px var(--mono);color:#aeabff}
+.progress-entry h3 {font-size:16px;margin:8px 0}
+.progress-entry p,.progress-entry li {color:#a6b7c6;font-size:12px;line-height:1.8}
+@media(max-width:850px) {.doc-grid,.doc-grid.three {grid-template-columns:1fr}}
+</style>
+</head>
 <body>
 <div class="app">
 <aside aria-label="Project navigation" class="sidebar" id="sidebar">
@@ -267,32 +304,39 @@
   Ankle mechanism
   <span class="soon">PROTOTYPE</span>
 </button>
-<button class="nav-item" data-page="leg" type="button"><span class="ico" data-icon="settings"></span> Leg structure <span class="soon">LATER</span></button>
-<button class="nav-item" data-page="torso" type="button"><span class="ico" data-icon="box"></span> Torso &amp; structure <span class="soon">LATER</span></button>
-<button class="nav-item" data-page="controls" type="button"><span class="ico" data-icon="cpu"></span> Control systems <span class="soon">LATER</span></button>
+<button class="nav-item" data-page="leg" type="button"><span class="ico" data-icon="settings"></span> Sizing &amp; inertia <small>03</small></button>
+<button class="nav-item" data-page="rom" type="button"><span class="ico" data-icon="activity"></span> Joint-limit research <small>04</small></button>
+<button class="nav-item" data-page="torso" type="button"><span class="ico" data-icon="box"></span> Architecture &amp; torso <small>05</small></button>
+<button class="nav-item" data-page="controls" type="button"><span class="ico" data-icon="cpu"></span> MuJoCo simulations <small>06</small></button>
 <p class="side-label">Planning</p>
 <button class="nav-item" data-page="roadmap" type="button"><span class="ico" data-icon="map"></span> System roadmap</button>
 <div class="side-bottom"><div class="privacy"><div class="privacy-head"><span class="dot"></span> PUBLIC DESIGN RECORD</div>
-<p>The published CAD record is viewable by anyone with the site URL. Personal notes you add here stay only in your own browser; they are not uploaded. Export your own backup if needed.</p></div><div class="side-foot">DOCUMENTATION BUILD · 02</div></div>
+<p>The published CAD record is viewable by anyone with the site URL. Personal notes you add here stay only in your own browser; they are not uploaded. Export your own backup if needed.</p></div><div class="side-foot">DOCUMENTATION BUILD · 03</div></div>
 </aside>
 <main>
 <header class="topbar"><div style="display:flex;align-items:center;gap:13px"><button aria-label="Open menu" class="mobile-nav" id="menuButton" type="button"><span class="ico" data-icon="menu"></span></button><div class="crumb">LAB <span>/</span> HUMANOID <span>/</span> <b id="breadcrumb">OVERVIEW</b></div></div><div class="top-actions"><span class="local-pill"><span class="dot"></span> PUBLIC PORTFOLIO</span><button class="btn secondary" id="importBackup" style="padding:8px 10px" title="Import saved JSON backup" type="button">Import JSON</button><input accept=".json,application/json" hidden="" id="backupFile" type="file"/><button aria-label="Export your local project notes" class="icon-button" id="quickExport" title="Export your local project notes" type="button"><span class="ico" data-icon="download"></span></button></div></header>
 <div class="content">
 <section aria-label="Project overview" class="page active" id="page-overview">
-<div class="hero"><div class="hero-copy"><div class="eyebrow">Independent Engineering Project</div><h1>Humanoid Robotics<br/><span>Prototype B1</span></h1><p class="lede">Independent Humanoid Robot Development. Mechanical Design, CAD, material selection, manufacturing,structural analysis, and simulation.<br><br>Current work: foot assembly, ankle mechanism,and actuator-driven linkages.</p><div class="hero-buttons"><button class="btn" data-go="foot" type="button">Explore foot assembly <span class="ico" data-icon="arrow"></span></button><button class="btn secondary" data-go="journal" type="button"><span class="ico" data-icon="plus"></span> Add progress entry</button></div></div><div class="hero-visual"><span class="hero-tag">CURRENT THREE-PART FOOT · RIGHT SIDE</span><img alt="Isolated CAD view of the current humanoid right foot: indigo PLA exterior, aluminum structure and black rubber outsole." src="assets/foot-only.webp"/><span class="axis">REV 02 · OCT 2026</span></div></div>
+<div class="hero"><div class="hero-copy"><div class="eyebrow">Independent Engineering Project</div><h1>Humanoid Robotics<br/><span>Compact Concept / B1</span></h1><p class="lede">Compact humanoid development using simulation-first architecture decisions and detailed mechanical design. Current target: <strong>1.20 m</strong> tall, <strong>35–45 kg</strong>, with a friendly boxy exterior.<br><br>Documented work: foot assembly, ankle linkage prototype, human-inspired joint limits, MuJoCo leg-proportion comparisons, and rotational-inertia design reasoning.</p><div class="hero-buttons"><button class="btn" data-go="foot" type="button">Explore foot assembly <span class="ico" data-icon="arrow"></span></button><button class="btn secondary" data-go="journal" type="button"><span class="ico" data-icon="plus"></span> Add progress entry</button></div></div><div class="hero-visual"><span class="hero-tag">CURRENT THREE-PART FOOT · RIGHT SIDE</span><img alt="Isolated CAD view of the current humanoid right foot: indigo PLA exterior, aluminum structure and black rubber outsole." src="assets/foot-only.webp"/><span class="axis">FOOT REV 02 · OCT 2026</span></div></div>
 <div class="metrics">
-<div class="metric"><div class="m-label">Documented subsystem</div><div class="m-number">01 <span style="color:#637982;font-size:17px">/ evolving</span></div><div class="m-hint">RIGHT FOOT ASSEMBLY</div></div>
-<div class="metric"><div class="m-label">Current foot components</div><div class="m-number">03</div><div class="m-hint">RUBBER · 6061-T6 · PLA</div></div>
-<div class="metric"><div class="m-label">Exterior mounting locations</div><div class="m-number">12</div><div class="m-hint">6 UPPER + 6 LOWER · TWO INTERFACES</div></div>
-<div class="metric"><div class="m-label">Development status</div><div class="m-number" style="font-size:22px;margin-top:5px">CAD REV 02</div><div class="m-hint">PRINTING + PHYSICAL TESTS PENDING</div></div>
+<div class="metric"><div class="m-label">New height target</div><div class="m-number">1.20 <span style="font-size:16px">m</span></div><div class="m-hint">COMPACT HUMANOID · PROVISIONAL</div></div>
+<div class="metric"><div class="m-label">Target robot mass</div><div class="m-number">35–45 <span style="font-size:16px">kg</span></div><div class="m-hint">DESIGN TARGET · NOT MEASURED</div></div>
+<div class="metric"><div class="m-label">Preferred leg ratio</div><div class="m-number">50/50</div><div class="m-hint">PROVISIONAL · MUJOCO GEOMETRY</div></div>
+<div class="metric"><div class="m-label">Development status</div><div class="m-number" style="font-size:21px;margin-top:5px">SIM + CAD</div><div class="m-hint">KINEMATIC SCREENING · DESIGN OPEN</div></div>
 </div>
-<div class="section-head"><div><h2>Documented systems</h2><p>The current baseline assembly and its available evidence.</p></div><button class="link-btn" data-go="roadmap" type="button">See roadmap →</button></div>
+<div class="section-head"><div><h2>Documented systems</h2><p>Existing CAD and a new simulation-driven system architecture.</p></div><button class="link-btn" data-go="roadmap" type="button">See roadmap →</button></div>
 <div aria-label="Open current foot assembly" class="section-card feature-card" data-go="foot" role="button" tabindex="0">
 <div class="feature-image"><img alt="Isolated deep indigo and black right-foot CAD assembly" src="assets/foot-only.webp"/></div>
 <div class="feature-info"><span class="tag">01 / CURRENT CAD BASELINE</span><h3>Right Foot Assembly</h3>
 <p>Three active components: a traction-focused rubber outsole, a 6061-T6 aluminum mounting bracket, and a curved, non-load-bearing PLA exterior cover finished in deep indigo. The carbon-fiber plate is deliberately excluded from this baseline.</p>
 <div class="inline-stats"><div><strong>3</strong><span>Current components</span></div><div><strong>M4</strong><span>Exterior interfaces</span></div><div><strong>DFR / DFA</strong><span>Design priorities</span></div></div>
 </div>
+</div>
+<div class="section-head"><div><h2>System-level research</h2><p>Published reasoning and simulation results; see detailed pages for assumptions and limitations.</p></div><button class="link-btn" data-go="controls" type="button">Explore MuJoCo →</button></div>
+<div class="next-grid" style="margin-bottom:16px">
+  <article class="section-card next" data-go="leg" style="cursor:pointer"><div class="eyebrow">DECISION 001</div><h3>Why 1.20 meters?</h3><p>Study how reducing moment arms and rotating inertia could improve capability with fixed actuator limits.</p></article>
+  <article class="section-card next" data-go="rom" style="cursor:pointer"><div class="eyebrow">ROM-LEG-001</div><h3>Human-inspired joint limits</h3><p>Clinical-source baseline for hip, knee and ankle degrees of freedom; 6 DOF per leg.</p></article>
+  <article class="section-card next" data-go="controls" style="cursor:pointer"><div class="eyebrow">SIMULATION 001</div><h3>MuJoCo leg screening</h3><p>50/50, 45/55 and 40/60 comparisons at the original 889 mm hip-to-ankle length.</p></article>
 </div>
 <div class="section-head"><div><h2>Next engineering work</h2><p>Planned work—not completed milestones.</p></div></div>
 <div class="next-grid">
@@ -1026,14 +1070,166 @@
   </div>
 
 </section>
+
+<!-- Rev 03: system-level architecture research, preserving original foot and ankle documentation -->
+<section aria-label="Robot size and rotational inertia" class="page" id="page-leg">
+  <div class="page-title"><div><div class="eyebrow">SYSTEM STUDY 01 / MECHANICAL ARCHITECTURE</div><h1>Robot sizing &amp; rotational inertia</h1>
+  <p>Why the concept moved from a 1.676 m humanoid to a compact 1.20 m design.</p></div><div class="rightmeta"><span class="tag blue">DESIGN HYPOTHESIS</span><div class="smallmono" style="margin-top:12px">30 OCT 2026</div></div></div>
+  <div class="doc-grid three" style="margin-bottom:16px">
+    <div class="doc-stat"><div class="value">1.20 m</div><div class="key">New height target</div></div>
+    <div class="doc-stat"><div class="value">35–45 kg</div><div class="key">Provisional total-mass target</div></div>
+    <div class="doc-stat"><div class="value">50 / 50</div><div class="key">Leading thigh-to-shin hypothesis</div></div>
+  </div>
+  <article class="section-card doc-block"><div class="eyebrow">ENGINEERING DECISION / HEIGHT REDUCTION</div><h2>Design reasoning</h2>
+    <p>The original full-size target was approximately <strong>1.676 m</strong>. The concept was reduced to <strong>1.20 m</strong>, motivated primarily by reducing moments of inertia and required joint torques while retaining the selected actuator family. This is an optimization hypothesis, not proof that every movement improves.</p>
+    <p>For rotating mass, the distance <strong>r</strong> to the rotation axis is critical: the point-mass approximation is <strong>I = m r²</strong>. Bringing the same mass closer to the axis reduces inertia quadratically, improving potential angular acceleration for a given available net torque.</p>
+    <div class="formula">I = m r² &nbsp; · &nbsp; α = τ<sub>net</sub> / I
+      <small>Point-mass approximation. A complete humanoid requires rigid-body inertia tensors, the parallel-axis theorem and joint-space dynamics.</small></div>
+    <p>With uniform geometric scaling, equal density and similar mass distribution, <strong>m ∝ L³</strong> and <strong>I ∝ L⁵</strong>. At 1.20 / 1.676 = 0.716 scale, ideal inertia becomes about <strong>18.8%</strong> of the original (approximately an <strong>81.2% decrease</strong>).</p>
+    <div class="status-note warn"><strong>Scaling limitation:</strong> The real robot keeps substantial fixed-size components (actuators, battery, computer). Its proposed mass is 35–45 kg, so the L⁵ result is a theoretical scaling comparison—not a predicted actual moment of inertia. Use link-specific CAD masses and inertia tensors for the real design.</div>
+  </article>
+  <article class="section-card doc-block"><div class="eyebrow">ILLUSTRATIVE TORQUE STUDY / 10 KG POINT MASS</div><h2>0.60 m vs 0.84 m lever arm</h2>
+    <p>Compare an identical <strong>10 kg</strong> concentrated mass at two perpendicular distances from a pitch axis while horizontal. Gravitational torque magnitude is <strong>τ = m g r</strong>. The available motor torque budget of <strong>120 N·m</strong> below is a provisional user-selected comparison value, not a verified continuous rating for a particular Robstride model.</p>
+    <div class="doc-table-wrap"><table class="doc-table"><thead><tr><th>Metric</th><th>r = 0.60 m</th><th>r = 0.84 m</th></tr></thead><tbody>
+    <tr><td>Mass</td><td>10 kg</td><td>10 kg</td></tr>
+    <tr><td>Gravity moment, m g r</td><td><strong>58.86 N·m</strong></td><td><strong>82.40 N·m</strong></td></tr>
+    <tr><td>Point-mass inertia, m r²</td><td><strong>3.600 kg·m²</strong></td><td><strong>7.056 kg·m²</strong></td></tr>
+    <tr><td>Difference to illustrative 120 N·m ceiling*</td><td>61.14 N·m</td><td>37.60 N·m</td></tr></tbody></table></div>
+    <div class="doc-grid" style="margin-top:14px"><div class="doc-stat"><div class="value">23.54 N·m</div><div class="key">Less gravitational torque at 0.60 m</div></div><div class="doc-stat"><div class="value">49.0%</div><div class="key">Less point-mass inertia at 0.60 m</div></div></div>
+    <div class="formula">τ₀.₆₀ = 10 × 9.81 × 0.60 = 58.86 N·m<br>τ₀.₈₄ = 10 × 9.81 × 0.84 = 82.40 N·m<br>Δτ = 23.54 N·m &nbsp; (28.6% less)<br>I₀.₆₀ / I₀.₈₄ = (0.60 / 0.84)² = 0.5102</div>
+    <p><strong>Interpretation:</strong> Shorter moment arms can free torque capacity for accelerating links or resisting disturbances. This example isolates one mass and one gravitational load case; it is not a verified whole-robot hip/knee torque prediction. Static vertical alignment, link COM, acceleration, multiple bodies, contact forces, reduction ratio, speed-dependent torque, and thermal limits all affect real joint loading.</p>
+    <p class="smallmono">*The subtraction from 120 N·m is illustrative, not a validated safety margin or usable continuous torque allowance.</p>
+  </article>
+  <article class="section-card doc-block"><h2>Design tradeoffs and intent</h2>
+    <p><strong>Expected benefits to investigate:</strong> smaller inertial loads; potentially better actuator-to-weight capability; smaller structural members; easier system-level experimentation; compact, recognizable product form.</p>
+    <p><strong>Costs to investigate:</strong> reduced reach and stride; smaller packaging volume; motors/battery becoming a greater fraction of total mass; foot-scale and stability tradeoffs; actuator performance cannot be inferred from scale alone.</p>
+    <p><strong>Selection status:</strong> 1.20 m is the current concept baseline; 35–45 kg is a mass target; 50/50 is the preferred ratio for further validation. None has completed full-body dynamic recovery validation.</p>
+  </article>
+</section>
+
+<section aria-label="Human-inspired lower-body joint limits" class="page" id="page-rom">
+  <div class="page-title"><div><div class="eyebrow">RESEARCH DOCUMENT / ROM-LEG-001</div><h1>Lower-Body Joint Limits</h1>
+  <p>Human-inspired range-of-motion baseline for MuJoCo humanoid comparison.</p></div><div class="rightmeta"><span class="tag">REV 1.0 / PROVISIONAL</span><div class="smallmono" style="margin-top:12px">29 OCT 2026</div></div></div>
+  <article class="section-card doc-block"><h2>1 · Scope</h2>
+    <p>Specify identical human-inspired single-axis joint motion limits for three leg designs (50/50, 45/55, 40/60). This is a baseline for squat and recovery testing, not a claim that every person reaches these angles or that the robot's mechanisms are already validated.</p>
+    <p><strong>6 DOF per leg</strong> = hip pitch/roll/yaw + knee pitch + ankle pitch/roll. <strong>12 lower-body DOF</strong> in total. Waist pitch/yaw are specified separately.</p>
+  </article>
+  <article class="section-card doc-block"><h2>2 · Joint-limit specification</h2>
+    <div class="doc-table-wrap"><table class="doc-table"><thead><tr><th>Robot DOF</th><th>Human motion</th><th>Research reference</th><th>Selected limit</th></tr></thead><tbody>
+      <tr><td><strong>Hip pitch</strong></td><td>Flexion / extension</td><td>120° flexion; 10–20° extension [S1]</td><td>−20° to +120°</td></tr>
+      <tr><td><strong>Hip roll</strong></td><td>Abduction / adduction</td><td>40–45° abduction; 20–30° adduction [S2]</td><td>40° outward / 25° inward</td></tr>
+      <tr><td><strong>Hip yaw</strong></td><td>Internal / external rotation</td><td>40° internal; 45° external [S1]</td><td>40° internal / 45° external</td></tr>
+      <tr><td><strong>Knee pitch</strong></td><td>Flexion / extension</td><td>130–135° flexion; −10° to 0° extension [S1]</td><td>0° to 135° flexion</td></tr>
+      <tr><td><strong>Ankle pitch</strong></td><td>Dorsiflexion / plantarflexion</td><td>20° dorsiflexion; 45° plantarflexion [S1]</td><td>−20° to +45°</td></tr>
+      <tr><td><strong>Ankle roll*</strong></td><td>Inversion / eversion</td><td>30° inversion; 20° eversion [S1]</td><td>30° inversion / 20° eversion</td></tr>
+    </tbody></table></div><p class="smallmono">*Human ankle inversion/eversion is anatomically coupled. A single robot hinge is an approximation.</p>
+  </article>
+  <article class="section-card doc-block"><h2>3 · MuJoCo implementation conventions</h2>
+    <ul><li>Upright neutral position defines the intended zero pose.</li>
+    <li>Intended positive movements: hip flexion, knee flexion and ankle plantarflexion.</li>
+    <li>Intended pitch ranges: hip −20° to +120°; knee 0° to +135°; ankle −20° to +45°.</li>
+    <li>Actual sign conventions depend on local MJCF axes. The initial planted-left-foot, nested-body prototype uses opposite numeric signs on some left/right pitch joints. Verify orientation in MuJoCo, rather than copying intended anatomical signs blindly.</li>
+    <li>Mirror hip roll/yaw and ankle roll as needed between legs; use <code>limited="true"</code> and a joint <code>range</code>, checking the MJCF compiler's angle setting.</li>
+    <li>These are separately measured clinical motions; simultaneous maximum pitch, roll and yaw is not guaranteed possible. Check self-collision and joint coupling.</li></ul>
+  </article>
+  <article class="section-card doc-block"><h2>4 · Evidence and modeling caveats</h2>
+    <p><strong>[S1]</strong> is a clinical normal-range table, not a population-average survey. Knee hyperextension is intentionally excluded. <strong>[S2]</strong> supports a chosen 40°/25° hip-roll baseline. <strong>[S3]</strong> gives alternative AAOS-based hip references (abduction 33.0° ± 4.8°, adduction 13.8° ± 6.3°), illustrating measurement and reference variability.</p>
+    <p>ROM alone does not prove a stable squat or successful floor recovery. Joint clearance, linked-axis behavior, ground contact, mass distribution, actuator torque-speed limits and controller behavior remain unresolved.</p>
+  </article>
+  <article class="section-card doc-block"><h2>5 · Comparison setup at original scale</h2>
+    <div class="doc-table-wrap"><table class="doc-table"><thead><tr><th>Ratio</th><th>Hip → knee</th><th>Knee → ankle</th></tr></thead><tbody>
+      <tr><td>50/50</td><td>444.50 mm</td><td>444.50 mm</td></tr>
+      <tr><td>45/55</td><td>400.05 mm</td><td>488.95 mm</td></tr>
+      <tr><td>40/60</td><td>355.60 mm</td><td>533.40 mm</td></tr>
+    </tbody></table></div>
+    <p><strong>Historical leg length = 889 mm.</strong> These dimensions belong to the earlier approximately 1.676 m model. For the new 1.20 m concept, purely proportional leg scaling would give ~636.5 mm hip-to-ankle and ~318.3 mm per link in 50/50. Those revised dimensions have <strong>not</strong> yet been tested or selected from anthropometric constraints.</p>
+    <p><strong>Stage A:</strong> collision-aware squat geometry, feet on ground, minimum pelvis height and reachable paths. <strong>Stage B:</strong> gravity, contact, actuator constraints, and controlled recovery. The existing geometry viewer is an earlier, less-complete screening study.</p>
+  </article>
+  <article class="section-card doc-block"><h2>6 · References</h2>
+    <ol class="source-list">
+      <li><strong>[S1]</strong> Yedlinsky, N. T., &amp; Peebles, R. L. (2021). <em>Telemedicine Management of Musculoskeletal Issues.</em> <em>American Family Physician</em>, 103(3), 147–154. Table 4.<br><a href="https://www.aafp.org/afp/2021/0201/p147" target="_blank" rel="noopener noreferrer">aafp.org/afp/2021/0201/p147</a></li>
+      <li><strong>[S2]</strong> <em>Introduction to Health Assessment for the Nursing Professional</em> (2024), Canadian edition. “Legs, Feet, and Related Joints,” Table 7.<br><a href="https://pressbooks.library.torontomu.ca/assessmentnursingmain/chapter/legs-feet-and-related-joints/" target="_blank" rel="noopener noreferrer">Toronto Metropolitan University Pressbooks</a></li>
+      <li><strong>[S3]</strong> <em>Physical Examination of the Hip</em> (2021), Table 1, reported normative hip values from AAOS references.<br><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8167346/" target="_blank" rel="noopener noreferrer">PMC8167346</a></li>
+    </ol>
+  </article>
+</section>
+
+<section aria-label="Robot architecture and torso" class="page" id="page-torso">
+  <div class="page-title"><div><div class="eyebrow">SYSTEM STUDY 02 / DESIGN INTENT</div><h1>Architecture &amp; exterior</h1>
+  <p>Packaging, visual identity, mass budget and high-level mechanical interfaces.</p></div><div class="rightmeta"><span class="tag blue">CONCEPT PHASE</span></div></div>
+  <div class="doc-grid">
+    <article class="section-card doc-block"><h2>Compact, friendly, boxy character</h2>
+      <p>Adopt a visually approachable robot with a <strong>boxy, softly rounded exterior</strong>, intentional proportions, and cohesive panel transitions. CAD will still require surface modeling for corners, transitions, covers, and clean form continuity.</p>
+      <p><strong>Design for Aesthetics</strong> is a real requirement alongside reliability, structural performance, manufacturability and service access. A memorable appearance should not compromise joint range or mechanisms.</p>
+    </article>
+    <article class="section-card doc-block"><h2>2-DOF waist concept</h2>
+      <p><strong>Yaw:</strong> continuous unbounded rotation as a design goal (full 360° rotation and beyond). <strong>Pitch:</strong> up to 90° of forward bending, pending mechanical clearance and torque verification. No waist roll in the initial concept.</p>
+      <p>Continuous yaw requires power and data transfer across the rotating interface, such as a suitably specified slip ring, and deliberate bearing support, wire routing and enclosure clearance.</p>
+    </article>
+    <article class="section-card doc-block"><h2>Mechanical-first electrical packaging</h2>
+      <p>The 48 V lithium battery is an important concentrated mass. Its exact mass is not measured and voltage alone does not determine weight. Battery location near the lower torso/waist will be evaluated for COM, pitch inertia, safety, cooling and access.</p>
+      <p>Computer, sensors, communication boards, cameras and speakers can occupy upper torso volumes. Use <strong>2–4 kg</strong> as a provisional combined allowance for smaller electronics and wiring (battery excluded), until actual masses are available. CAN can simplify motor communications but does not replace actuator power wiring.</p>
+    </article>
+    <article class="section-card doc-block"><h2>Foot assembly remains a baseline</h2>
+      <p>Keep the current right foot's <strong>rubber outsole, 6061-T6 structural bracket, and nonstructural PLA shell</strong> as the starting CAD concept. Six lower mechanical cover fasteners and six separate upper mounting positions remain documented under Foot Assembly.</p>
+      <p>The existing foot may need rescaling or a contact-area review now that the whole robot has moved to 1.20 m. Retention, manufacturing and structural validation remain open.</p>
+    </article>
+  </div>
+  <article class="section-card doc-block" style="margin-top:16px"><h2>System-level design intentions</h2>
+    <ul><li>Simulation-first joint placement and motion capability, then detailed SolidWorks mechanisms.</li>
+    <li>Low distal limb inertia while preserving a useful crouch/recovery workspace; 50/50 remains a hypothesis, not a universal optimum.</li>
+    <li>Use existing Robstride actuator selections as constraints, then validate exact torque-speed curves and thermal ratings.</li>
+    <li>Maintain reliability-focused fasteners, accessible electronics and visually coherent outer shell.</li>
+    <li>Use estimated batteries, electronics and frame mass in early MuJoCo studies, then replace assumptions with measured or CAD-computed inertia.</li></ul>
+  </article>
+</section>
+
+<section aria-label="MuJoCo results and simulation plan" class="page" id="page-controls">
+  <div class="page-title"><div><div class="eyebrow">SIMULATION STUDY 001 / MJCF</div><h1>MuJoCo leg geometry</h1>
+  <p>Recorded geometry screening before the 1.20 m resizing decision. Original hip-to-ankle length: 889 mm.</p></div><div class="rightmeta"><span class="tag amber">KINEMATICS ONLY</span><div class="smallmono" style="margin-top:12px">OCT 2026</div></div></div>
+  <article class="section-card doc-block"><h2>Method</h2><p>A custom primitive-shape MJCF humanoid was generated for three ratios: 50/50, 45/55 and 40/60. Capsules/boxes represent links; hinge joints represent pitch DOFs. In the initial test, one foot was fixed to the world, gravity and collision detection were disabled, and scripted joint positions generated identical nominal knee bends.</p>
+    <p>This was intended to measure <strong>pelvis height under prescribed, comparable kinematic poses</strong>, not whether a real robot can balance, squat dynamically or stand up after a fall.</p></article>
+  <article class="section-card doc-block"><h2>Observed output from local MuJoCo runs</h2>
+    <div class="doc-table-wrap"><table class="doc-table"><thead><tr><th>Nominal knee bend</th><th>50/50 hip height</th><th>45/55 hip height</th><th>40/60 hip height</th></tr></thead><tbody>
+      <tr><td>110°</td><td>382.5 mm</td><td>442.1 mm</td><td>501.8 mm</td></tr>
+      <tr><td>120°</td><td>312.3 mm</td><td>378.9 mm</td><td>445.6 mm</td></tr>
+      <tr><td>130°</td><td>305.5 mm</td><td>371.5 mm</td><td>437.5 mm</td></tr>
+      <tr><td><strong>135°</strong></td><td><strong>297.1 mm</strong></td><td>362.3 mm</td><td>427.4 mm</td></tr>
+    </tbody></table></div>
+    <p>At 135°, the 50/50 pose places the pelvis <strong>130.3 mm lower</strong> than 40/60. This strongly motivates retaining 50/50 as the first candidate for further testing, but the scripted pose does not optimize over all joint angles or check collisions, support, stability, power or recovery.</p>
+    <div class="status-note">Experimental boundary: the above results are from the original 889 mm leg setup. They have <strong>not</strong> yet been rerun for the new 1.20 m / 35–45 kg robot, and do not demonstrate an optimal floor-to-standing ratio.</div>
+  </article>
+  <article class="section-card doc-block"><h2>What comes next</h2>
+    <ol><li>Rescale the entire humanoid geometry for the 1.20 m height; revisit torso, arms and foot proportions rather than changing leg length alone.</li>
+    <li>Use realistic masses, link inertias and joint positions, including a battery mass range and 2–4 kg provisional other-electronics allowance.</li>
+    <li>Add complete hip/ankle DOFs and the documented ROM ranges, then check self-collisions and foot contact.</li>
+    <li>Use gravity, ground contacts and actuator torque/speed constraints; compare equivalent crouch and recovery trajectories.</li>
+    <li>Update SolidWorks CAD only after architectural requirements become clear; feed CAD mass properties back into MuJoCo.</li></ol>
+    <p><strong>Research question:</strong> Does a 50/50 configuration maintain an advantage in collision-free recovery reachability and controllable stand-up trajectories once mass distribution and joint constraints are included?</p>
+  </article>
+</section>
+
 <section
   aria-label="System roadmap"
   class="page"
   id="page-roadmap"
 >
   <div class="page-title">
-  <div><div class="eyebrow">PROJECT STRUCTURE</div><h1>System roadmap</h1><p>A public overview of planned humanoid subsystems. Only the right foot has a current design record.</p></div></div><div class="roadmap-grid"><article class="section-card roadmap-card live" data-go="foot" role="button" tabindex="0"><div><div class="no">01 / LOWER LIMB</div><h3>Foot assembly</h3><p>Current three-part foot: rubber, 6061-T6 aluminum and deep-indigo PLA, with reliability-focused attachment.</p></div><span class="state">DOCUMENTED</span></article><article class="section-card roadmap-card"><div><div class="no">02 / LOWER LIMB</div><h3>Ankle mechanism</h3><p>Yoke, pitch/roll axes, ball-bearing joints, and actuator pushrods.</p></div><span class="state">PLANNED</span></article><article class="section-card roadmap-card"><div><div class="no">03 / STRUCTURE</div><h3>Leg structure</h3><p>Linkages, motor mounts, knee/hip interfaces, mass budget.</p></div><span class="state">FUTURE</span></article><article class="section-card roadmap-card"><div><div class="no">04 / STRUCTURE</div><h3>Torso and frame</h3><p>Load paths, packaging, connection patterns, and electronics mounts.</p></div><span class="state">FUTURE</span></article><article class="section-card roadmap-card"><div><div class="no">05 / SYSTEMS</div><h3>Actuation &amp; sensing</h3><p>Motor sizing, encoders, sensors, power, and wiring.</p></div><span class="state">FUTURE</span></article><article class="section-card roadmap-card"><div><div class="no">06 / SYSTEMS</div><h3>Controls &amp; simulation</h3><p>Dynamics, gait control, system identification, and validation.</p></div><span class="state">FUTURE</span></article></div></section>
-<section aria-label="Engineering log" class="page" id="page-journal"><div class="page-title"><div><div class="eyebrow">OPTIONAL / BROWSER-LOCAL NOTEBOOK</div><h1>Personal engineering log</h1><p>Record new observations privately in your browser. Published design decisions live in the Foot Assembly documentation; this journal is not synchronized between visitors.</p></div></div><div class="caution" style="margin:0 0 16px"><strong>Public site, local journal:</strong> This page is published as a static portfolio, but your edits in the fields below are saved only to your browser. They are not uploaded, shared or added to the public documentation. Do not treat this as an online account or cloud backup.</div><div class="journal-wrap"><div class="section-card journal-form"><h3>New entry</h3><form id="journalForm"><div class="form-row"><div class="field"><label for="entryDate">Date</label><input id="entryDate" required="" type="date"/></div><div class="field"><label for="entryType">Category</label><select id="entryType"><option>CAD</option><option>DFM</option><option>Decision</option><option>Test</option><option>Research</option></select></div></div><div class="field"><label for="entryTitle">Entry title</label><input id="entryTitle" maxlength="100" placeholder="e.g. Revised M4 bracket holes" required="" type="text"/></div><div class="field"><label for="entryBody">What changed / why?</label><textarea id="entryBody" maxlength="4000" placeholder="Describe the change, key dimensions, reasoning, observations, and next validation step..." required=""></textarea></div><button class="btn" type="submit"><span class="ico" data-icon="plus"></span> Add to log</button></form><p class="smallmono" style="line-height:1.7;margin-top:19px">Browser-local storage may be cleared. Use the export control to back up your engineering notes as JSON.</p></div><div class="section-card journal-list"><div style="display:flex;justify-content:space-between;align-items:center;gap:12px"><h3>Project timeline</h3><button class="link-btn" id="exportJournal" type="button">Export JSON ↗</button></div><div id="entries"></div></div></div></section>
+  <div><div class="eyebrow">PROJECT STRUCTURE</div><h1>System roadmap</h1><p>A public overview of planned humanoid subsystems. Foot and ankle prototype records plus system-level simulation and joint-range research are now documented.</p></div></div><div class="roadmap-grid"><article class="section-card roadmap-card live" data-go="foot" role="button" tabindex="0"><div><div class="no">01 / LOWER LIMB</div><h3>Foot assembly</h3><p>Current three-part foot: rubber, 6061-T6 aluminum and deep-indigo PLA, with reliability-focused attachment.</p></div><span class="state">DOCUMENTED</span></article><article class="section-card roadmap-card"><div><div class="no">02 / LOWER LIMB</div><h3>Ankle mechanism</h3><p>Physical pushrod-linkage prototype, bearing interfaces, fastener and manufacturing rationale.</p></div><span class="state">PROTOTYPE</span></article><article class="section-card roadmap-card"><div><div class="no">03 / STRUCTURE</div><h3>Robot size &amp; inertia</h3><p>1.20 m / 35–45 kg target and moment-arm torque study.</p></div><span class="state">RESEARCH</span></article><article class="section-card roadmap-card"><div><div class="no">04 / STRUCTURE</div><h3>Torso &amp; visual design</h3><p>Boxy exterior, battery placement and 2-DOF waist concept.</p></div><span class="state">CONCEPT</span></article><article class="section-card roadmap-card"><div><div class="no">05 / SYSTEMS</div><h3>Actuation &amp; sensing</h3><p>Motor sizing, encoders, sensors, power, and wiring.</p></div><span class="state">FUTURE</span></article><article class="section-card roadmap-card"><div><div class="no">06 / SYSTEMS</div><h3>MuJoCo geometry study</h3><p>Three original-scale leg ratios tested; dynamic recovery not yet validated.</p></div><span class="state">SCREENED</span></article></div></section>
+<section aria-label="Engineering log" class="page" id="page-journal">
+<div class="section-card doc-block" style="margin-bottom:18px">
+  <div class="eyebrow">PUBLISHED DEVELOPMENT RECORD</div>
+  <h2>Recorded project progress</h2>
+  <article class="progress-entry">
+    <time datetime="2026-10-30T00:11:00">30 OCT 2026 · 12:11 AM (local)</time>
+    <h3>MuJoCo leg screening and compact humanoid design decision</h3>
+    <p>Built and ran a simplified humanoid geometry comparison in Linux using a Python virtual environment and MuJoCo. Tested 50/50, 45/55 and 40/60 thigh/shin ratios at a shared original 889 mm leg length, with nominal knee bends from 110° through 135°. Compared printed pelvis heights. At 135°, results were 297.1 mm, 362.3 mm and 427.4 mm respectively. Selected 50/50 as the provisional preferred ratio for follow-up recovery testing; not proven optimal.</p>
+    <p>Compiled clinical reference ranges for lower-body joints (ROM-LEG-001) and implemented human-inspired pitch constraints in the geometry prototype. Reviewed the role of moment arm and inertia in joint capability, then revised the robot-height target from approximately 1.676 m to 1.20 m with a provisional 35–45 kg system-mass goal. Proposed a friendly, compact, rounded-box exterior while retaining the existing foot CAD baseline.</p>
+    <p><strong>Next action:</strong> resize the complete primitive model, estimate mass/inertia and battery location, add contact/gravity and actuator constraints, and test squat/recovery feasibility before committing to detailed leg CAD.</p>
+    <p class="smallmono">Evidence classification: recorded local MuJoCo geometry output + documented design decisions; no dynamic stand-up or physical robot test claimed.</p>
+  </article>
+</div>
+<div class="page-title"><div><div class="eyebrow">OPTIONAL / BROWSER-LOCAL NOTEBOOK</div><h1>Personal engineering log</h1><p>Record new observations privately in your browser. Published design decisions live in the Foot Assembly documentation; this journal is not synchronized between visitors.</p></div></div><div class="caution" style="margin:0 0 16px"><strong>Public site, local journal:</strong> This page is published as a static portfolio, but your edits in the fields below are saved only to your browser. They are not uploaded, shared or added to the public documentation. Do not treat this as an online account or cloud backup.</div><div class="journal-wrap"><div class="section-card journal-form"><h3>New entry</h3><form id="journalForm"><div class="form-row"><div class="field"><label for="entryDate">Date</label><input id="entryDate" required="" type="date"/></div><div class="field"><label for="entryType">Category</label><select id="entryType"><option>CAD</option><option>DFM</option><option>Decision</option><option>Test</option><option>Research</option></select></div></div><div class="field"><label for="entryTitle">Entry title</label><input id="entryTitle" maxlength="100" placeholder="e.g. Revised M4 bracket holes" required="" type="text"/></div><div class="field"><label for="entryBody">What changed / why?</label><textarea id="entryBody" maxlength="4000" placeholder="Describe the change, key dimensions, reasoning, observations, and next validation step..." required=""></textarea></div><button class="btn" type="submit"><span class="ico" data-icon="plus"></span> Add to log</button></form><p class="smallmono" style="line-height:1.7;margin-top:19px">Browser-local storage may be cleared. Use the export control to back up your engineering notes as JSON.</p></div><div class="section-card journal-list"><div style="display:flex;justify-content:space-between;align-items:center;gap:12px"><h3>Project timeline</h3><button class="link-btn" id="exportJournal" type="button">Export JSON ↗</button></div><div id="entries"></div></div></div></section>
 <section aria-label="Undocumented subsystem" class="page" id="page-empty"><div class="eyebrow" id="emptyEyebrow">PLANNED SUBSYSTEM</div><div class="empty-shell"><span class="ico" data-icon="construction"></span><h1 class="empty-h" id="emptyTitle">Coming later</h1><p id="emptyText">This subsystem isn't documented yet. The workspace is ready to grow as new CAD assemblies and test results are added.</p><button class="btn" data-go="roadmap" type="button">Return to roadmap <span class="ico" data-icon="arrow"></span></button></div></section>
 <footer class="muted-foot"><span>HUMANOID LAB / PUBLIC ENGINEERING DESIGN RECORD</span><span>STATIC PROJECT PAGES · PERSONAL NOTES REMAIN BROWSER-LOCAL</span></footer>
 </div>
@@ -1045,7 +1241,7 @@
     (function(){'use strict';
       const paths={layout:'<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M9 9h12"/>',notebook:'<path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/><path d="M9 7h7M9 11h7"/>',layers:'<path d="m12 3-9 5 9 5 9-5-9-5zM3 12l9 5 9-5M3 16l9 5 9-5"/>',move:'<path d="M12 2v20M2 12h20M12 2l-3 3M12 2l3 3M12 22l-3-3M12 22l3-3M2 12l3-3M2 12l3 3M22 12l-3-3M22 12l-3 3"/>',settings:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.34 1.88l.06.06-2 2-.06-.06A1.7 1.7 0 0015 19.4V21H9v-1.6a1.7 1.7 0 00-1.88-.34l-.06.06-2-2 .06-.06A1.7 1.7 0 004.6 15H3V9h1.6a1.7 1.7 0 00.34-1.88l-.06-.06 2-2 .06.06A1.7 1.7 0 009 4.6V3h6v1.6a1.7 1.7 0 001.88.34l.06-.06 2 2-.06.06A1.7 1.7 0 0019.4 9H21v6z"/>',box:'<path d="M21 16V8a2 2 0 00-1-1.7l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.7l7 4a2 2 0 002 0l7-4a2 2 0 001-1.7z"/><path d="M3.3 7L12 12l8.7-5M12 22V12"/>',cpu:'<rect x="5" y="5" width="14" height="14" rx="2"/><path d="M9 9h6v6H9zM9 1v4M15 1v4M9 19v4M15 19v4M19 9h4M19 15h4M1 9h4M1 15h4"/>',map:'<path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3V6zM9 3v15M15 6v15"/>',arrow:'<path d="M5 12h14M12 5l7 7-7 7"/>',plus:'<path d="M12 5v14M5 12h14"/>',download:'<path d="M12 3v12M7 10l5 5 5-5M4 17v4h16v-4"/>',menu:'<path d="M4 6h16M4 12h16M4 18h16"/>',activity:'<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>',wrench:'<path d="M14.7 6.3a5 5 0 01-6.4 6.4L3 18l3 3 5.3-5.3a5 5 0 006.4-6.4l-3.1 3.1-3-3z"/>',construction:'<path d="M10 3L2 21h20L14 3zM6 12h12M12 3v9"/>'};
       document.querySelectorAll('[data-icon]').forEach(el=>{let shape=paths[el.dataset.icon]||paths.box;el.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+shape+'</svg>';});
-      const labels={overview:'OVERVIEW',foot:'FOOT ASSEMBLY',roadmap:'SYSTEM ROADMAP',journal:'ENGINEERING LOG',ankle:'ANKLE MECHANISM',leg:'LEG STRUCTURE',torso:'TORSO',controls:'CONTROL SYSTEMS'};
+      const labels={overview:'OVERVIEW',foot:'FOOT ASSEMBLY',roadmap:'SYSTEM ROADMAP',journal:'ENGINEERING LOG',ankle:'ANKLE MECHANISM',leg:'ROBOT SIZING & INERTIA',rom:'JOINT LIMIT RESEARCH',torso:'ROBOT ARCHITECTURE',controls:'MUJOCO SIMULATIONS'};
       const placeholder={ankle:'The intended ankle interface includes a yoke, pitch/roll mechanism, and pushrod links. No completed ankle CAD is documented here yet.',leg:'Mechanical leg structures, joints, and their analysis will be documented in a future revision.',torso:'Torso structure and component packaging have not yet been documented.',controls:'Motor control, dynamics, state estimation and simulation documentation will be added as the project develops.'};
       function go(where){let name=labels[where]?where:'overview';document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));document.querySelectorAll('.nav-item').forEach(el=>{el.classList.toggle('active',el.dataset.page===name);el.setAttribute('aria-current',el.dataset.page===name?'page':'false')});let selected=document.getElementById('page-'+name)||document.getElementById('page-empty');if(!document.getElementById('page-'+name)){document.getElementById('emptyTitle').textContent=labels[name];document.getElementById('emptyText').textContent=placeholder[name]||'This subsystem is planned for a future design iteration.';}selected.classList.add('active');document.getElementById('breadcrumb').textContent=labels[name];document.getElementById('sidebar').classList.remove('open');window.scrollTo({top:0,behavior:'instant'});if(window.location.hash!=='#/'+name) history.replaceState(null,'','#/'+name);}
       document.querySelectorAll('[data-page],[data-go]').forEach(el=>el.addEventListener('click',()=>go(el.dataset.page||el.dataset.go)));document.querySelectorAll('[role="button"][tabindex]').forEach(el=>el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go(el.dataset.go);}}));
